@@ -4,7 +4,7 @@ from modules.PopulationList import PopulationList
 
 
 def main():
-    dataset = Dataset('dayr4.2.csv')
+    dataset = Dataset('weekr4.2.csv')
     popList = PopulationList(dataset)
 
     for generation in range(1, Parameter.generations + 1):

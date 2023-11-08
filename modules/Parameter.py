@@ -7,7 +7,7 @@ class Parameter:
     population_count = 100
 
     # Max Instruction (Row) per each Individual
-    max_instruction = 32
+    max_operation = 8
 
     # Max number per each decode instruction (Source Select, Target Index, Source Index)
     # (Max number for the 'operator_select' is dynamically assumed by the OperatorSet class)
