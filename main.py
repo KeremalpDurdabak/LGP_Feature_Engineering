@@ -8,13 +8,13 @@ def main():
     Dataset.load_dataset('weekr4.2.csv')#, 'stratified', 200)
 
     populationList = PopulationList()
+    print('Forming Teams...')
     teams = TeamList(populationList)
-    print('1')
 
     # Proceed with genetic operations
     for generation in range(1, Parameter.generations + 1):
+        print(f'Generation: {generation}')
         teams.evolve(Dataset.X_train.values,Dataset.y_train.values)
-        print('1')
         # Display.generationReport()
 
     # Display.overallReport()

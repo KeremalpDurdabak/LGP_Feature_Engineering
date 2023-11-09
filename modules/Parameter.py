@@ -23,7 +23,7 @@ class Parameter:
     gap_percentage = 0.3
 
     # Generation Count
-    generations = 1
+    generations = 10
 
     # Probability of a Mutation
     mutation_prob = 0.3

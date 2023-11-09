@@ -1,3 +1,4 @@
+import copy
 import random
 import numpy as np
 from modules.Dataset import Dataset
@@ -12,16 +13,12 @@ class Individual:
 
         for _ in range(Parameter.operation_count):
             operation, func = OperationSet.get_random_operation()
-            
             if operation in ['add', 'subtract']:
-                operands = random.sample(Dataset.feature_names, 2)
+                operands = random.sample(range(Dataset.feature_count), 2)
             else:
-                operands = [random.choice(Dataset.feature_names), '2']
+                operands = [random.choice(range(Dataset.feature_count)), 2]
 
             self.equation.append((operation, operands))
-
-        # Evaluate the individual's equation using the training data
-        #self.evaluate(Dataset.X_train.values)
 
     def evaluate(self, data):
         # The data parameter is expected to be a NumPy array where each row corresponds to an instance
@@ -31,14 +28,11 @@ class Individual:
 
         for operation, operands in self.equation:
             operation_func = OperationSet.OPERATIONS[operation]
-
             if operation in ['add', 'subtract']:
-                operand_indices = [Dataset.feature_names.index(op) for op in operands]
-                results += operation_func(data[:, operand_indices[0]], data[:, operand_indices[1]])
+                results += operation_func(data[:, operands[0]], data[:, operands[1]])
             else:
-                operand_index = Dataset.feature_names.index(operands[0])
                 # For 'multiply' and 'divide', the second operand is always 2
-                results += operation_func(data[:, operand_index], 2)
+                results += operation_func(data[:, operands[0]], 2)
 
         # Store the evaluation results
         self.value = results
@@ -48,8 +42,14 @@ class Individual:
         equation_parts = []
         for operation, operands in self.equation:
             if operation in ['add', 'subtract']:
-                equation_parts.append(f"({operands[0]} {operation} {operands[1]})")
+                equation_parts.append(f"(F{operands[0]} {operation} F{operands[1]})")
             else:
-                equation_parts.append(f"({operands[0]} {operation} 2)")
+                equation_parts.append(f"(F{operands[0]} {operation} 2)")
 
         return ' '.join(equation_parts)
+
+    def with_equation(self, equation):
+        # Create a new Individual with the given equation
+        new_individual = Individual(self.population_label)
+        new_individual.equation = copy.deepcopy(equation)  # Ensure a deep copy
+        return new_individual
