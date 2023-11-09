@@ -4,10 +4,10 @@ from dataclasses import dataclass
 @dataclass
 class Parameter:
     # Number of Individuals in the Population
-    population_count = 100
+    population_count = 10
 
     # Max Instruction (Row) per each Individual
-    max_operation = 8
+    operation_count = 4
 
     # Max number per each decode instruction (Source Select, Target Index, Source Index)
     # (Max number for the 'operator_select' is dynamically assumed by the OperatorSet class)
@@ -23,7 +23,7 @@ class Parameter:
     gap_percentage = 0.3
 
     # Generation Count
-    generations = 1000
+    generations = 1
 
     # Probability of a Mutation
     mutation_prob = 0.3

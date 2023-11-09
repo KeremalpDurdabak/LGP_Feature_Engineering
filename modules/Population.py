@@ -1,10 +1,10 @@
-# Assuming Individual.py is in the same directory as Population.py
 from modules.Individual import Individual
 from modules.Parameter import Parameter
 
 class Population:
-    def __init__(self, label, dataset):
-        self.label = label
-        self.dataset  = dataset
-        self.individuals = [Individual(dataset) for _ in range(Parameter.population_count)]
-        print('1')
+    def __init__(self, label):
+        # Initialize individuals with the population label
+        self.individuals = [Individual(label) for _ in range(Parameter.population_count)]
+
+
+# Assuming the Individual class is defined elsewhere and handles its own initialization

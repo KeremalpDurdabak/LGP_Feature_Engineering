@@ -1,14 +1,8 @@
-from modules.Population import Population
-
+from modules.Population import Population  # Assuming this will be implemented later
+from modules.Dataset import Dataset
 
 class PopulationList:
-    def __init__(self, dataset):
-        self.populations = []
-        self.create_populations(dataset)
+    def __init__(self):
+        # Create a dictionary to hold populations, each keyed by its target label
+        self.populations = {label: Population(label) for label in Dataset.target_labels}
 
-    def create_populations(self, dataset):
-        # Create a population for each unique target label
-        for label in dataset.target_labels:
-            # Assume Population class takes a target label and population count as initialization parameters
-            population = Population(label, dataset)
-            self.populations.append(population)
