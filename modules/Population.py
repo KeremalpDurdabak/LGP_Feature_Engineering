@@ -15,7 +15,6 @@ class Population:
         self.individuals.append(individual)
 
     def remove_individuals(self, individuals_to_remove):
-        # Filter out individuals that are marked for removal
         self.individuals = [ind for ind in self.individuals if ind not in individuals_to_remove]
 
     def generate_children(self):

@@ -33,9 +33,20 @@ class TeamList:
         # Determine the number of teams to remove
         num_teams_to_remove = int(len(self.teams) * Parameter.gap_percentage)
 
-        # Identify the individuals in the lowest-performing teams
+        # Identify the teams to remove
         teams_to_remove = self.teams[-num_teams_to_remove:]
-        self.population_list.remove_individuals(teams_to_remove)
+
+        # Collect individuals to remove from their respective populations
+        individuals_to_remove = {}
+        for team in teams_to_remove:
+            for individual in team.individuals:
+                population_label = team.individual_to_population[individual]
+                if population_label not in individuals_to_remove:
+                    individuals_to_remove[population_label] = []
+                individuals_to_remove[population_label].append(individual)
+
+        # Remove the identified individuals from their populations
+        self.population_list.remove_individuals(individuals_to_remove)
 
         # Generate new children to fill the gap
         self.population_list.generate_children()

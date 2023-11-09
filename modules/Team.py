@@ -4,6 +4,7 @@ class Team:
     def __init__(self, individuals):
         self.individuals = individuals
         self.fitness = 0
+        self.individual_to_population = {ind: ind.population_label for ind in individuals}
 
     def evaluate_fitness(self, data, actual_labels):
         # Vectorize the evaluation of all individuals for all instances
