@@ -1,4 +1,4 @@
-from modules.Population import Population  # Assuming this will be implemented later
+from modules.Population import Population
 from modules.Dataset import Dataset
 
 class PopulationList:
@@ -7,6 +7,7 @@ class PopulationList:
         self.populations = {label: Population(label) for label in Dataset.target_labels}
 
     def remove_individuals(self, individuals_to_remove):
+        # Remove individuals from their respective populations
         for population_label, individuals in individuals_to_remove.items():
             self.populations[population_label].remove_individuals(individuals)
 
@@ -16,3 +17,5 @@ class PopulationList:
             population.generate_children()
 
     # ... (any other existing methods you may have)
+
+# Add any additional methods that are necessary for the PopulationList class to function.

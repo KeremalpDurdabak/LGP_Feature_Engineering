@@ -12,9 +12,12 @@ class Population:
         self.individuals = [Individual(label) for _ in range(Parameter.population_count)]
 
     def add_individual(self, individual):
+        # Mark the individual as new and add to the population
+        individual.is_new = True
         self.individuals.append(individual)
 
     def remove_individuals(self, individuals_to_remove):
+        # Remove the specified individuals from the population
         self.individuals = [ind for ind in self.individuals if ind not in individuals_to_remove]
 
     def generate_children(self):
@@ -23,6 +26,8 @@ class Population:
 
         # Generate new children (this method needs to handle crossover and mutation)
         children = self.crossover_and_mutate(num_children)
+        for child in children:
+            child.is_new = True  # Mark the child as new
         self.individuals.extend(children)
 
     def crossover_and_mutate(self, num_children):
@@ -56,3 +61,6 @@ class Population:
                 else:
                     operands = [random.choice(range(Dataset.feature_count)), 2]
                 individual.equation[i] = (individual.equation[i][0], operands)
+
+        # After mutation, the individual needs to be re-evaluated
+        individual.evaluated = False
