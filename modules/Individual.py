@@ -54,12 +54,28 @@ class Individual:
         new_individual.is_new = True  # Mark as new
         return new_individual
 
-    def __str__(self):
-        equation_parts = []
-        for operation, operands in self.equation:
-            if operation in ['add', 'subtract']:
-                equation_parts.append(f"(F{operands[0]} {operation} F{operands[1]})")
-            else:
-                equation_parts.append(f"(F{operands[0]} {operation} 2)")
 
+    def __str__(self):
+        # Start with an empty list to hold parts of the equation
+        equation_parts = []
+
+        # Track the last operation to handle order of operations
+        last_operation = None
+
+        for operation, operands in self.equation:
+            # For add and subtract, we'll group with parentheses
+            if operation in ['add', 'subtract']:
+                # If the last operation was multiply or divide, we need to enclose the previous part in parentheses
+                if last_operation in ['multiply', 'divide']:
+                    equation_parts[-1] = f"({equation_parts[-1]})"
+                # Append the current operation with its operands
+                equation_parts.append(f"F{operands[0]} {'+' if operation == 'add' else '-'} F{operands[1]}")
+            else:
+                # For multiply and divide, just append the operation
+                equation_parts.append(f"F{operands[0]} {'*' if operation == 'multiply' else '/'} 2")
+
+            # Update the last operation
+            last_operation = operation
+
+        # Combine the parts into one string with proper order of operations
         return ' '.join(equation_parts)
