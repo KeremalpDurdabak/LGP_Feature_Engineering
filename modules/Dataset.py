@@ -31,17 +31,20 @@ class Dataset:
         # Apply sampling strategy if specified
         if sampling_strategy:
             if sampling_strategy == 'random':
-                data = data.sample(n=tau, replace=False, random_state=42)
+                data = data.sample(n=tau, replace=False)
             elif sampling_strategy == 'stratified':
-                # If a class label has less than tau instances, it needs to re-use the instances
-                counts = data['insider'].value_counts()
-                sample_df_list = []
+                samples_per_class = tau // len(cls.target_labels)
+                remaining_samples = tau % len(cls.target_labels)
+                sampled_data = []
+
                 for label in cls.target_labels:
-                    n_samples = min(counts[label], tau)
-                    sampled_data = data[data['insider'] == label].sample(n=n_samples, replace=True, random_state=42)
-                    sample_df_list.append(sampled_data)
-                data = pd.concat(sample_df_list).sample(frac=1).reset_index(drop=True)  # Shuffle the dataset
+                    class_data = data[data['insider'] == label]
+                    n_samples = samples_per_class + (1 if remaining_samples > 0 else 0)
+                    remaining_samples -= 1
+                    sampled_data.append(class_data.sample(n=n_samples, replace=True))
+
+                data = pd.concat(sampled_data).sample(frac=1).reset_index(drop=True)
         
         # Split the dataset into train and test sets
         cls.X_train, cls.X_test, cls.y_train, cls.y_test = train_test_split(
-            data[feature_columns], data['insider'], test_size=0.2, random_state=42)
+            data[feature_columns], data['insider'], test_size=0.2)

@@ -37,8 +37,8 @@ class TeamList:
         # Print the best performing team's fitness and individuals' details
         best_team = self.teams[0]
         print(f"Best Team's Fitness: {best_team.fitness}")
-        for individual in best_team.individuals:
-            print(f"Population Label: {individual.population_label}, Equation: {individual}")
+        # for individual in best_team.individuals:
+        #     print(f"Population Label: {individual.population_label}, Equation: {individual}")
 
 
         # Preserve the best performing teams
