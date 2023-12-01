@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.metrics import f1_score
 
 class Team:
     def __init__(self, individuals):
@@ -15,9 +16,10 @@ class Team:
         winning_indices = np.argmax(evaluations, axis=0)
 
         # Vectorize the comparison of predicted labels with actual labels
-        # Instead of using a list comprehension, directly index the array of population labels
         population_labels = np.array([ind.population_label for ind in self.individuals])
         predicted_labels = population_labels[winning_indices]
-        self.fitness = np.sum(predicted_labels == actual_labels)
+
+        # Calculate the macro F1 score
+        self.fitness = f1_score(actual_labels, predicted_labels, average='macro')
 
     # ... (any other existing methods you may have)

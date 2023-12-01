@@ -32,9 +32,6 @@ class TeamList:
         # Sort teams by fitness in descending order
         self.teams.sort(key=lambda team: team.fitness, reverse=True)
 
-        # Print the fitness scores of all teams for debugging
-        print("Fitness scores:", [team.fitness for team in self.teams])
-
         # Preserve the best performing teams
         best_teams = self.teams[:-self.num_teams_to_remove]
 

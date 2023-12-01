@@ -5,7 +5,7 @@ from modules.TeamList import TeamList
 
 def main():
     # Load the dataset
-    Dataset.load_dataset('weekr4.2.csv', 'stratified', 40)
+    Dataset.load_dataset('weekr4.2.csv', 'stratified', 400)
 
     populationList = PopulationList()
     print('Forming Teams...')

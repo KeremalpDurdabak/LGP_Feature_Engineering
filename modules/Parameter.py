@@ -7,10 +7,10 @@ class Parameter:
     population_count = 100
 
     # Max Instruction (Row) per each Individual
-    operation_count = 10
+    operation_count = 5
 
     # Percentage of worst fit Individuals to replace
-    gap_percentage = 0.8
+    gap_percentage = 0.3
 
     # Generation Count
     generations = 10000
