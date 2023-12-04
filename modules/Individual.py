@@ -48,12 +48,13 @@ class Individual:
         return new_individual
 
     def __str__(self):
-        # Optimized string representation
-        equation_parts = [self.format_operation(operation, operands) for operation, operands in self.equation]
-        return ' '.join(equation_parts)
+        equation_parts = []
+        for operation, operands in self.equation:
+            formatted_operation = self.format_operation(operation, operands)
+            equation_parts.append(f"({formatted_operation})")
+        return ' + '.join(equation_parts)
 
     def format_operation(self, operation, operands):
-        # Helper method to format an operation
         if operation in ['add', 'subtract']:
             return f"F{operands[0]} {'+' if operation == 'add' else '-'} F{operands[1]}"
         else:
