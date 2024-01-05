@@ -32,7 +32,7 @@ class Dataset:
         if sampling_strategy:
             if sampling_strategy == 'random':
                 data = data.sample(n=tau, replace=False)
-            elif sampling_strategy == 'stratified':
+            elif sampling_strategy == 'equal':
                 samples_per_class = tau // len(cls.target_labels)
                 remaining_samples = tau % len(cls.target_labels)
                 sampled_data = []
@@ -44,7 +44,13 @@ class Dataset:
                     sampled_data.append(class_data.sample(n=n_samples, replace=True))
 
                 data = pd.concat(sampled_data).sample(frac=1).reset_index(drop=True)
-        
+            elif sampling_strategy == 'stratified':
+                # Stratified sampling
+                X = data[feature_columns]
+                y = data['insider']
+                X_sample, _, y_sample, _ = train_test_split(X, y, train_size=tau, stratify=y, random_state=42)
+                data = pd.concat([X_sample, y_sample], axis=1)
+
         # Split the dataset into train and test sets
         cls.X_train, cls.X_test, cls.y_train, cls.y_test = train_test_split(
             data[feature_columns], data['insider'], test_size=0.2)

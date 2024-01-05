@@ -5,7 +5,7 @@ from modules.TeamList import TeamList
 from modules.Display import Display
 
 def main():
-    Dataset.load_dataset('weekr4.2.csv')#, 'stratified', 400)
+    Dataset.load_dataset('sessionr4.2.csv', 'stratified', 40000)
     populationList = PopulationList()
 
     print('Forming Teams...')
@@ -23,10 +23,10 @@ def main():
 
     Display.overallReport(best_fitness_scores)
 
-    # Write the best fitness scores to a text file
-    with open('week_best_fitness_scores.txt', 'w') as file:
-        for score in best_fitness_scores:
-            file.write(f"{score}\n")
+    # # Write the best fitness scores to a text file
+    # with open('session2_best_fitness_scores.txt', 'w') as file:
+    #     for score in best_fitness_scores:
+    #         file.write(f"{score}\n")
 
 if __name__ == '__main__':
     main()
